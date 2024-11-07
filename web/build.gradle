@@ -1,0 +1,10 @@
+apply plugin: 'war'
+
+dependencies {
+    providedCompile 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+    implementation project(':core')
+    implementation project(':persistence')
+    providedCompile 'org.apache.tomcat:tomcat-jsp-api:10.0.0-M10'
+    providedCompile 'jakarta.annotation:jakarta.annotation-api:2.1.0'
+}

@@ -1,0 +1,34 @@
+// root build.gradle
+subprojects {
+    group = 'com.naverrain'
+    version = '1.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    dependencies {
+        testImplementation 'junit:junit:4.12'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
+        implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+        implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+        implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.2'
+        implementation 'com.lmax:disruptor:3.3.4'
+    }
+
+    // Ensure the web module applies the 'war' plugin in its specific build.gradle
+    if (project.name == 'web') {
+        apply plugin: 'war'
+    }
+}
