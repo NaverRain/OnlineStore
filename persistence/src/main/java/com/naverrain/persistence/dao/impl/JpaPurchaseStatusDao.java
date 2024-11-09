@@ -2,15 +2,23 @@ package com.naverrain.persistence.dao.impl;
 
 import com.naverrain.persistence.dao.PurchaseStatusDao;
 import com.naverrain.persistence.dto.PurchaseStatusDto;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class JpaPurchaseStatusDao implements PurchaseStatusDao {
 
     @Override
     public PurchaseStatusDto getPurchaseStatusById(Integer id) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-                var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             PurchaseStatusDto purchaseStatus = em.find(PurchaseStatusDto.class, id);
@@ -18,6 +26,14 @@ public class JpaPurchaseStatusDao implements PurchaseStatusDao {
             em.getTransaction().commit();
 
             return purchaseStatus;
+        }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
         }
     }
 }

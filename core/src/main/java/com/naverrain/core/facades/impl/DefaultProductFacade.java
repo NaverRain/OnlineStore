@@ -2,26 +2,21 @@ package com.naverrain.core.facades.impl;
 
 import com.naverrain.core.facades.ProductFacade;
 import com.naverrain.persistence.dao.ProductDao;
-import com.naverrain.persistence.dao.impl.JpaProductDao;
 import com.naverrain.persistence.dto.converter.ProductDtoToProductConverter;
 import com.naverrain.persistence.entities.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DefaultProductFacade implements ProductFacade {
 
-    private static DefaultProductFacade instance;
+    @Autowired
+    private ProductDao productDao;
 
-    private static ProductDao productDao = new JpaProductDao();
-    private static ProductDtoToProductConverter converter = new ProductDtoToProductConverter();
-
-    public static synchronized DefaultProductFacade getInstance(){
-        if (instance == null){
-            instance = new DefaultProductFacade();
-        }
-        return instance;
-    }
-
+    @Autowired
+    private ProductDtoToProductConverter converter;
 
     @Override
     public List<Product> getProductsLikeName(String searchQuery) {

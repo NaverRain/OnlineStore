@@ -3,15 +3,23 @@ package com.naverrain.persistence.dto.converter;
 import com.naverrain.persistence.dto.PurchaseDto;
 import com.naverrain.persistence.entities.Purchase;
 import com.naverrain.persistence.entities.impl.DefaultPurchase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PurchaseDtoToPurchaseConverter {
 
-    private ProductDtoToProductConverter productConverter = new ProductDtoToProductConverter();
-    private UserDtoToUserConverter userConverter = new UserDtoToUserConverter();
-    private PurchaseStatusDtoToPurchaseStatusConverter purchaseStatusConverter = new PurchaseStatusDtoToPurchaseStatusConverter();
+    @Autowired
+    private ProductDtoToProductConverter productConverter;
+
+    @Autowired
+    private UserDtoToUserConverter userConverter;
+
+    @Autowired
+    private PurchaseStatusDtoToPurchaseStatusConverter purchaseStatusConverter;
 
 
     public Purchase convertPurchaseDtoToPurchase(PurchaseDto purchaseDto) {

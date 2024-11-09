@@ -1,7 +1,9 @@
 package com.naverrain.persistence.dto.converter;
 
 import com.naverrain.persistence.dto.RoleDto;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoleDtoToRoleConverter {
 
 

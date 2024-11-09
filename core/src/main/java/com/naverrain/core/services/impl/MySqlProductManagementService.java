@@ -1,24 +1,24 @@
 package com.naverrain.core.services.impl;
 
 import com.naverrain.persistence.dao.ProductDao;
-import com.naverrain.persistence.dao.impl.JpaProductDao;
-import com.naverrain.persistence.dao.impl.MySqlJdbcProductDao;
 import com.naverrain.persistence.dto.ProductDto;
 import com.naverrain.persistence.dto.converter.ProductDtoToProductConverter;
 import com.naverrain.persistence.entities.Product;
 import com.naverrain.core.services.ProductManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MySqlProductManagementService implements ProductManagementService {
 
+    @Autowired
     private ProductDao productDao;
+
+    @Autowired
     private ProductDtoToProductConverter productConverter;
 
-    {
-        productDao = new JpaProductDao();
-        productConverter = new ProductDtoToProductConverter();
-    }
 
     @Override
     public List<Product> getProducts() {

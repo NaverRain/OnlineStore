@@ -1,10 +1,18 @@
 apply plugin: 'war'
 
+ext {
+    springVersion = '5.3.23'
+}
+
 dependencies {
-    providedCompile 'jakarta.servlet:jakarta.servlet-api:5.0.0'
-    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
     implementation project(':core')
     implementation project(':persistence')
-    providedCompile 'org.apache.tomcat:tomcat-jsp-api:10.0.0-M10'
-    providedCompile 'jakarta.annotation:jakarta.annotation-api:2.1.0'
+    providedCompile 'org.apache.tomcat:tomcat-jsp-api:9.0.96'
+
+    implementation "javax.servlet:javax.servlet-api:3.1.0"
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
+    implementation "javax.validation:validation-api:2.0.1.Final"
+    providedCompile "javax.servlet.jsp:jsp-api:2.2"
+    implementation "javax.servlet:jstl:1.2"
+    implementation "org.springframework:spring-webmvc:$springVersion"
 }

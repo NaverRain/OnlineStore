@@ -1,24 +1,19 @@
 package com.naverrain.store.web.filters;
 
 import static com.naverrain.persistence.dto.RoleDto.*;
-import static com.naverrain.store.web.controllers.SignInServlet.*;
+import static com.naverrain.store.web.controllers.SignInController.*;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 import com.naverrain.persistence.entities.User;
 
 @WebFilter("/admin/*")
-public class AdminFilter extends HttpFilter implements Filter {
+public class AdminFilter implements Filter {
       
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -44,6 +39,13 @@ public class AdminFilter extends HttpFilter implements Filter {
 
 	}
 
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 
+	}
 
+	@Override
+	public void destroy() {
+
+	}
 }

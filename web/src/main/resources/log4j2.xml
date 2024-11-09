@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
-	<Properties>
-        <Property name="basePath">C:\logs</Property>
+<Configuration status="DEBUG">
+    <Properties>
+        <Property name="basePath">C:\\logs</Property>
     </Properties>
     <Appenders>
-        # Console appender
+        <!-- Console appender -->
         <Console name="stdout" target="SYSTEM_OUT">
-            # Pattern of log message for console appender
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
         </Console>
 
-
         <RollingFile name="rolling-file-appender"
-            fileName="${basePath}/app.log"
-            filePattern="${basePath}/app.%i.log"
-            ignoreExceptions="false">
+                     fileName="${basePath}/app.log"
+                     filePattern="${basePath}/app.%i.log"
+                     ignoreExceptions="true">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
             </PatternLayout>

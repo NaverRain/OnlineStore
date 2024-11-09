@@ -2,42 +2,68 @@ package com.naverrain.persistence.dao.impl;
 
 import com.naverrain.persistence.dao.ProductDao;
 import com.naverrain.persistence.dto.ProductDto;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.*;
 
 import java.util.List;
 
+@Repository
 public class JpaProductDao implements ProductDao {
 
     @Override
     public List<ProductDto> getProducts() {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-               var em = emf.createEntityManager() ){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             List<ProductDto> products = em.createQuery("SELECT p FROM product p", ProductDto.class).getResultList();
             em.getTransaction().commit();
             return products;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public ProductDto getProductByProductId(int id) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-                var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             ProductDto product = em.find(ProductDto.class, id);
             em.getTransaction().commit();
             return product;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public List<ProductDto> getProductsLikeName(String searchQuery) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-                var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
            Query query = em.createNativeQuery(
@@ -49,12 +75,23 @@ public class JpaProductDao implements ProductDao {
             em.getTransaction().commit();
             return products;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public List<ProductDto> getProductsByCategoryId(Integer id) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-                var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             TypedQuery<ProductDto> query = em.createQuery("SELECT p FROM product p WHERE p.categoryDto.id = :id", ProductDto.class);
@@ -64,14 +101,24 @@ public class JpaProductDao implements ProductDao {
             em.getTransaction().commit();
             return products;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public List<ProductDto> getProductsByCategoryIdPaginationLimit(Integer categoryId, Integer page, Integer limit) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-             var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
-
             TypedQuery<ProductDto> query = em.createQuery("SELECT p FROM product p WHERE p.categoryDto.id = :id", ProductDto.class);
             query.setParameter("id", categoryId);
 
@@ -82,12 +129,23 @@ public class JpaProductDao implements ProductDao {
             em.getTransaction().commit();
             return products;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public Integer getProductCountForCategory(Integer categoryId) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-             var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
             TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM product p WHERE p.categoryDto.id = :id", Long.class);
             query.setParameter("id", categoryId);
@@ -96,12 +154,23 @@ public class JpaProductDao implements ProductDao {
             em.getTransaction().commit();
             return count.intValue();
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public Integer getProductCountForSearch(String searchQuery) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-             var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             Query query = em.createQuery("SELECT COUNT(*) FROM product WHERE UPPER(product_name) LIKE UPPER(CONCAT('%',:searchQuery,'%'))", Integer.class);
@@ -111,12 +180,23 @@ public class JpaProductDao implements ProductDao {
 
             return count;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public List<ProductDto> getProductsLikeNameForPageWithLimit(String searchQuery, Integer page, Integer limit) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-             var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             Query query = em.createQuery(
@@ -133,12 +213,23 @@ public class JpaProductDao implements ProductDao {
 
             return products;
         }
+        finally {
+            if (emf != null){
+                emf.close();
+            }
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
     public ProductDto getProductByProductGuid(String guid) {
-        try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-             var em = emf.createEntityManager()){
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
             em.getTransaction().begin();
 
             TypedQuery<ProductDto> query = em.createQuery("SELECT p FROM product p WHERE p.guid=:guid", ProductDto.class);
@@ -147,6 +238,14 @@ public class JpaProductDao implements ProductDao {
 
             em.getTransaction().commit();
             return product;
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+            if (em != null) {
+                em.close();
+            }
         }
     }
+
 }
