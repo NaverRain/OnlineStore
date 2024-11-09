@@ -1,25 +1,31 @@
 package com.naverrain.persistence.entities.impl;
 
-import com.naverrain.persistence.utils.validation.Validate;
-
 import java.util.Objects;
 
 import com.naverrain.persistence.entities.User;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class DefaultUser implements User {
     private static int userCounter = 0;
 
     private int id;
 
-    @Validate(pattern = "[a-zA-Z]+")
+    @NotEmpty(message = "First name should not be empty")
+    @Size(min = 3, max = 25, message = "First name should have from 3 to 25 characters")
     private String firstName;
     
-    @Validate(pattern = "[a-zA-Z]+")
+    @NotEmpty(message = "Last name should not be empty")
+    @Size(min = 3, max = 25, message = "Last name should have from 3 to 25 characters")
     private String lastName;
 
     private String password;
+    private String repeatPassword;
 
-    @Validate(pattern = ".+@.+")
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Please, use a real email")
     private String email;
 
     private String roleName;
@@ -137,14 +143,20 @@ public class DefaultUser implements User {
         }
     }
 
+    public String getRepeatPassword(){
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword){
+        this.repeatPassword = repeatPassword;
+    }
+
     @Override
     public void setEmail(String newEmail) {
         if (newEmail == null) return;
 
         this.email = newEmail;
     }
-    
-    
 
     @Override
 	public void setPartnerCode(String partnerCode) {

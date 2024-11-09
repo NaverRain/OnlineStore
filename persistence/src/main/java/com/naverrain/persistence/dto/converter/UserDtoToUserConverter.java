@@ -3,17 +3,18 @@ package com.naverrain.persistence.dto.converter;
 import com.naverrain.persistence.dto.UserDto;
 import com.naverrain.persistence.entities.User;
 import com.naverrain.persistence.entities.impl.DefaultUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserDtoToUserConverter {
 
+    @Autowired
     private RoleDtoToRoleConverter roleConverter;
-    {
-        roleConverter = new RoleDtoToRoleConverter();
-    }
 
     public UserDto convertUserIdToUserDtoWithOnlyId(int customerId) {
         UserDto userDto = new UserDto();

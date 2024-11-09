@@ -3,17 +3,18 @@ package com.naverrain.persistence.dto.converter;
 import com.naverrain.persistence.dto.ProductDto;
 import com.naverrain.persistence.entities.Product;
 import com.naverrain.persistence.entities.impl.DefaultProduct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProductDtoToProductConverter {
 
+    @Autowired
     private CategoryDtoToCategoryConverter categoryConverter;
-    {
-        categoryConverter = new CategoryDtoToCategoryConverter();
-    }
 
     public List<Product> convertProductDtosToProducts(List<ProductDto> productDtos){
         List<Product> products = new ArrayList<>();

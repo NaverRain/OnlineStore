@@ -1,11 +1,11 @@
 package com.naverrain.persistence.dto;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import java.math.BigDecimal;
 
@@ -21,7 +21,7 @@ public class UserDto {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, length = 50)
     private String email;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -37,7 +37,7 @@ public class UserDto {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "partner_code")
+    @Column(name = "partner_code", length = 50)
     private String partnerCode;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -3,7 +3,9 @@ package com.naverrain.persistence.dto.converter;
 import com.naverrain.persistence.dto.PurchaseStatusDto;
 import com.naverrain.persistence.entities.PurchaseStatus;
 import com.naverrain.persistence.entities.impl.DefaultPurchaseStatus;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PurchaseStatusDtoToPurchaseStatusConverter {
 
     public PurchaseStatus convertPurchaseStatusDtoToPurchaseStatus(PurchaseStatusDto purchaseStatusDto){

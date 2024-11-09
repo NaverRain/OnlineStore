@@ -4,9 +4,12 @@ import com.naverrain.persistence.dto.CategoryDto;
 import com.naverrain.persistence.entities.Category;
 import com.naverrain.persistence.entities.impl.DefaultCategory;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CategoryDtoToCategoryConverter {
 
     public CategoryDto convertCategoryNameToCategoryDtoWithOnlyName(String categoryName){

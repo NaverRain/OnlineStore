@@ -1,21 +1,19 @@
 package com.naverrain.store.web.filters;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpFilter;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 
 @WebFilter("/*")
-public class PartnerCodeFilter extends HttpFilter implements Filter {
+public class PartnerCodeFilter implements Filter {
 
 	public final static String PARTNER_CODE_PARAMETER_NAME = "partner_code";
 	public final static String PARTNER_CODE_COOKIE_NAME = "partner_code";
@@ -29,4 +27,13 @@ public class PartnerCodeFilter extends HttpFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+
+	}
+
+	@Override
+	public void destroy() {
+
+	}
 }

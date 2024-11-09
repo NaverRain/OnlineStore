@@ -4,27 +4,26 @@ import static  com.naverrain.persistence.dto.RoleDto.CUSTOMER_ROLE_NAME;
 
 import com.naverrain.core.facades.UserFacade;
 import com.naverrain.core.services.AffiliateMarketingService;
-import com.naverrain.core.services.impl.DefaultAffiliateMarketingService;
 import com.naverrain.persistence.dao.UserDao;
-import com.naverrain.persistence.dao.impl.JpaUserDao;
 import com.naverrain.persistence.dto.converter.UserDtoToUserConverter;
 import com.naverrain.persistence.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DefaultUserFacade implements UserFacade{
 
-	private static DefaultUserFacade instance;
-	private UserDao userDao = new JpaUserDao();
-	private UserDtoToUserConverter converter = new UserDtoToUserConverter();
-	private AffiliateMarketingService marketingService = new DefaultAffiliateMarketingService();
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private UserDtoToUserConverter converter;
+
+	@Autowired
+	private AffiliateMarketingService marketingService;
 	
-	public static synchronized DefaultUserFacade getInstance() {
-		if (instance == null) {
-			instance = new DefaultUserFacade();
-		}
-		return instance;
-	}
 
 	@Override
 	public void registerUser(User user, String referrerCode) {

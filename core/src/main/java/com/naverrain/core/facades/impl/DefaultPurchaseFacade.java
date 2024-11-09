@@ -1,10 +1,8 @@
 package com.naverrain.core.facades.impl;
 
-import com.naverrain.core.configs.CoreCofigurations;
 import com.naverrain.core.facades.PurchaseFacade;
 import com.naverrain.core.facades.UserFacade;
 import com.naverrain.persistence.dao.PurchaseDao;
-import com.naverrain.persistence.dao.impl.JpaPurchaseDao;
 import com.naverrain.persistence.dto.converter.PurchaseDtoToPurchaseConverter;
 import com.naverrain.persistence.entities.Product;
 import com.naverrain.persistence.entities.Purchase;
@@ -12,17 +10,28 @@ import com.naverrain.persistence.entities.PurchaseStatus;
 import com.naverrain.persistence.entities.User;
 import com.naverrain.persistence.entities.impl.DefaultPurchase;
 import com.naverrain.persistence.entities.impl.DefaultPurchaseStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class DefaultPurchaseFacade implements PurchaseFacade {
-    private static DefaultPurchaseFacade instance;
 
-    private static PurchaseDao purchaseDao = new JpaPurchaseDao();
-    private static PurchaseDtoToPurchaseConverter converter = new PurchaseDtoToPurchaseConverter();
-    private static UserFacade userFacade = DefaultUserFacade.getInstance();
+    @Autowired
+    private PurchaseDao purchaseDao;
+
+    @Autowired
+    private PurchaseDtoToPurchaseConverter converter;
+
+    @Autowired
+    private UserFacade userFacade;
+
+    @Value("${referrer.reward.rate}")
+    private Double referrerRewardRate;
 
     @Override
     public void createPurchase(User user, Product product) {
@@ -55,17 +64,10 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 
         if (LAST_STATUS_OF_ORDER_FULFILMENT_ID.equals(newPurchaseStatusId) && purchase.getCustomer().getReferrerUser() != null){
             User referrerUser = purchase.getCustomer().getReferrerUser();
-            double shareFromPurchases = purchase.getTotalPurchaseCost() * CoreCofigurations.REFERRER_REWARD_RATE;
+            double shareFromPurchases = purchase.getTotalPurchaseCost() * referrerRewardRate;
             referrerUser.setMoney(referrerUser.getMoney() + shareFromPurchases);
             userFacade.updateUser(referrerUser);
         }
     }
 
-
-    public static synchronized DefaultPurchaseFacade getInstance(){
-        if (instance == null){
-            instance = new DefaultPurchaseFacade();
-        }
-        return instance;
-    }
 }

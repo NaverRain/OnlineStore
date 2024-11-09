@@ -21,7 +21,6 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 		</auth-constraint>
 
 		<user-data-constraint>
-			<!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
 			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
@@ -33,18 +32,5 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	<session-config>
 		<session-timeout>15</session-timeout>
 	</session-config>
-
-    <error-page>
-        <error-code>403</error-code>
-        <location>/403-error</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.lang.NullPointerException</exception-type>
-        <location>/error-handler</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404-error</location>
-    </error-page>
 
 </web-app>

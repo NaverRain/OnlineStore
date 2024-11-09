@@ -1,23 +1,23 @@
 package com.naverrain.core.services.impl;
 
 import com.naverrain.persistence.dao.PurchaseDao;
-import com.naverrain.persistence.dao.impl.JpaPurchaseDao;
-import com.naverrain.persistence.dao.impl.MySqlJdbcPurchaseDao;
 import com.naverrain.persistence.dto.PurchaseDto;
 import com.naverrain.persistence.dto.converter.PurchaseDtoToPurchaseConverter;
 import com.naverrain.persistence.entities.Purchase;
 import com.naverrain.core.services.PurchaseManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MySqlPurchaseManagementService implements PurchaseManagementService {
 
+    @Autowired
     PurchaseDao purchaseDao;
+
+    @Autowired
     PurchaseDtoToPurchaseConverter purchaseConverter;
-    {
-        purchaseDao = new JpaPurchaseDao();
-        purchaseConverter = new PurchaseDtoToPurchaseConverter();
-    }
 
     @Override
     public void addPurchase(Purchase purchase) {

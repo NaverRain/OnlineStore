@@ -1,32 +1,32 @@
 package com.naverrain.core.services.impl;
 
 import com.naverrain.persistence.dao.UserDao;
-import com.naverrain.persistence.dao.impl.JpaUserDao;
-import com.naverrain.persistence.dao.impl.MySqlJdbcUserDao;
 import com.naverrain.persistence.dto.UserDto;
 import com.naverrain.persistence.dto.converter.UserDtoToUserConverter;
 import com.naverrain.persistence.entities.User;
 import com.naverrain.core.services.UserManagementService;
 import com.naverrain.core.mail.MailSender;
-import com.naverrain.core.mail.impl.DefaultMailSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MySqlUserManagementService implements UserManagementService {
 
     private static final String SUCCESSFULL_REGISTRATION_MESSAGE = "User is registered!";
     private static final String REGISTRATION_FAIL_MESSAGE = "The email is already used.";
 
+    @Autowired
     private UserDao userDao;
+
+    @Autowired
     private UserDtoToUserConverter userConverter;
 
+    @Autowired
     private MailSender mailSender;
 
-    {
-        userDao = new JpaUserDao();
-        userConverter = new UserDtoToUserConverter();
-        mailSender = DefaultMailSender.getInstance();
-    }
+
 
 
     @Override

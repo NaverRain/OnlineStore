@@ -1,6 +1,7 @@
 package com.naverrain.core.services.impl;
 
 import com.naverrain.core.services.Validator;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,9 +10,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DefaultValidator implements Validator {
-
-    private static DefaultValidator instance;
 
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
@@ -39,13 +39,6 @@ public class DefaultValidator implements Validator {
     @Override
     public boolean isValidEmail(String email) {
         return email != null && email.matches(EMAIL_PATTERN);
-    }
-
-    public static synchronized DefaultValidator getInstance(){
-        if (instance == null){
-            instance = new DefaultValidator();
-        }
-        return instance;
     }
 
     @Override
