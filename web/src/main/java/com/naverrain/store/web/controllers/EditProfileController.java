@@ -4,9 +4,9 @@ import com.naverrain.core.facades.UserFacade;
 import com.naverrain.core.services.Validator;
 import com.naverrain.core.services.impl.DefaultValidator;
 import com.naverrain.persistence.entities.User;
-import com.naverrain.store.web.utils.PBKDF2WithHmacSHA1EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +31,7 @@ public class EditProfileController {
     private MessageSource messageSource;
 
     @Autowired
-    private PBKDF2WithHmacSHA1EncryptionService encryptionService;
+    private PasswordEncoder encoder;
 
     @GetMapping
     public String doGet(HttpSession session){
@@ -61,7 +61,7 @@ public class EditProfileController {
             return "redirect:/edit-profile";
         }
 
-        if (!encryptionService.validatePassword(password, loggedInUser.getPassword())) {
+        if (!encoder.matches(password, loggedInUser.getPassword())) {
             session.setAttribute("errMsg", messageSource.getMessage("signup.err.msg.old.password.wrong", null, Locale.getDefault()));
             return "redirect:/edit-profile";
         }
@@ -82,7 +82,7 @@ public class EditProfileController {
         }
 
         if (newPasswordParam != null && !newPasswordParam.isEmpty()) {
-            user.setPassword(encryptionService.generatePasswordWithSaltAndHash(newPasswordParam));
+            user.setPassword(encoder.encode(newPasswordParam));
         }
 
         userFacade.updateUser(user);

@@ -64,7 +64,7 @@
 
 <!-- Password Field -->
 <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-    <form:input class="input100" path="password" placeholder="Password"/>
+    <form:password  class="input100" path="password" placeholder="Password"/>
     <span class="focus-input100"></span>
     <span class="symbol-input100">
         <span class="lnr lnr-lock"></span>
@@ -74,7 +74,7 @@
 
 <!-- Repeat Password Field -->
 <div class="wrap-input100 validate-input m-b-16" data-validate="Repeat password is required">
-    <form:input class="input100" path="repeatPassword" placeholder="Repeat Password"/>
+    <form:password  class="input100" path="repeatPassword" placeholder="Repeat Password"/>
     <span class="focus-input100"></span>
     <span class="symbol-input100">
         <span class="lnr lnr-lock"></span>

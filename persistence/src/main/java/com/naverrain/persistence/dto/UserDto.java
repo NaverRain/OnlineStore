@@ -1,18 +1,15 @@
 package com.naverrain.persistence.dto;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(name = "user")
 public class UserDto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "first_name")
@@ -24,9 +21,17 @@ public class UserDto {
     @Column(name = "email", unique = true, length = 50)
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_user_role")
-    private RoleDto roleDto;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private List<RoleDto> roles;
+
+    @Column(name = "enanbled")
+    private boolean isEnabled;
 
     @Column(name = "money")
     private BigDecimal money;
@@ -48,7 +53,7 @@ public class UserDto {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -76,12 +81,12 @@ public class UserDto {
         this.email = email;
     }
 
-    public RoleDto getRoleDto() {
-        return roleDto;
+    public List<RoleDto> getRoles() {
+        return roles;
     }
 
-    public void setRoleDto(RoleDto roleDto) {
-        this.roleDto = roleDto;
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
     }
 
     public BigDecimal getMoney() {
@@ -124,19 +129,12 @@ public class UserDto {
 		this.referrerUser = referrerUser;
 	}
 
-    @Override
-    public String toString() {
-        return "UserDto [" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", roleDto=" + roleDto +
-                ", money=" + money +
-                ", creditCard='" + creditCard + '\'' +
-                ", password='" + password + '\'' +
-                ", partnerCode='" + partnerCode + '\'' +
-                ", referrerUser=" + referrerUser +
-                ']';
+    public boolean isEnabled() {
+        return isEnabled;
     }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
 }

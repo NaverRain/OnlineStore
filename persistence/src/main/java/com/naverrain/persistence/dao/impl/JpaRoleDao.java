@@ -44,10 +44,10 @@ public class JpaRoleDao implements RoleDao {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            TypedQuery<RoleDto> query = em.createQuery("SELECT r FROM role r WHERE r.roleName = :role", RoleDto.class);
-            query.setParameter("role", roleName);
+            TypedQuery<RoleDto> query = em.createQuery("SELECT r FROM role r WHERE r.roleName = :roleName", RoleDto.class);
+            query.setParameter("roleName", roleName);
 
-            RoleDto role = query.getSingleResult();
+            RoleDto role = query.getResultList().stream().findFirst().orElse(null);
             em.getTransaction().commit();
             return role;
         }
@@ -60,4 +60,25 @@ public class JpaRoleDao implements RoleDao {
             }
         }
     }
+
+    @Override
+    public void save(RoleDto role) {
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("persistence-unit");
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(role);
+            em.getTransaction().commit();
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
 }

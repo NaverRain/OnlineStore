@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="DEBUG">
     <Properties>
-        <Property name="basePath">C:\\logs</Property>
+        <Property name="basePath">C:\logs</Property>
     </Properties>
     <Appenders>
         <!-- Console appender -->

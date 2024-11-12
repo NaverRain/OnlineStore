@@ -32,16 +32,15 @@ public class UserDtoToUserConverter {
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        
-		if (userDto.getRoleDto() != null) 
-			user.setRoleName(userDto.getRoleDto().getRoleName());
-		
-        user.setMoney(userDto.getMoney().doubleValue());
+        user.setRoles(roleConverter.convertRoleDtosToRoles(userDto.getRoles())); // here
+        if (userDto.getMoney() != null) {
+            user.setMoney(userDto.getMoney().doubleValue());
+        }
         user.setCreditCard(userDto.getCreditCard());
         user.setPassword(userDto.getPassword());
         user.setPartnerCode(userDto.getPartnerCode());
         user.setReferrerUser(convertUserDtoToUser(userDto.getReferrerUser()));
-
+        user.setIsEnabled(userDto.isEnabled());
         
         return user;
     }
@@ -57,9 +56,7 @@ public class UserDtoToUserConverter {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
 
-        userDto.setRoleDto(roleConverter
-                .convertRoleNameToRoleDtoWithOnlyRoleName(user.getRoleName()));
-
+        userDto.setRoles(roleConverter.convertRolesToRoleDtos(user.getRoles()));
         userDto.setMoney(BigDecimal.valueOf(user.getMoney()));
         userDto.setCreditCard(user.getCreditCard());
         userDto.setPassword(user.getPassword());
@@ -70,15 +67,18 @@ public class UserDtoToUserConverter {
     }
 
     public List<User> convertUserDtosToUsers(List<UserDto> userDtos) {
-        if (userDtos == null)
-            return null;
-
         List<User> users = new ArrayList<>();
-
         for (UserDto userDto : userDtos){
             users.add(convertUserDtoToUser(userDto));
         }
-
         return users;
+    }
+
+    public List<UserDto> convertUsersToUserDtos(List<User> users) {
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            userDtos.add(convertUserToUserDto(user));
+        }
+        return userDtos;
     }
 }

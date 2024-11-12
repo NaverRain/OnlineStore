@@ -22,7 +22,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
 					<c:if test="${UNSUCCESSFUL_LOGIN_COUNT == null || UNSUCCESSFUL_LOGIN_COUNT < 3}">
-				<form class="login100-form validate-form" action="signin" method="POST">
+				<form class="login100-form validate-form" action="perform_login" method="POST">
 				<span class="login100-form-title p-b-55">
 					Welcome
 				</span>
@@ -43,6 +43,12 @@
 					</span>
 				</div>
 
+				<div class="contact100-form-checkbox m-l-4">
+					<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember">
+					<label class="label-checkbox100" for="ckb1">
+						Remember me
+					</label>
+				</div>
 
 				<div class="container-login100-form-btn p-t-25">
 					<button class="login100-form-btn" type="submit">

@@ -1,7 +1,9 @@
 package com.naverrain.persistence.entities.impl;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.naverrain.persistence.entities.Role;
 import com.naverrain.persistence.entities.User;
 
 import javax.validation.constraints.Email;
@@ -28,13 +30,15 @@ public class DefaultUser implements User {
     @Email(message = "Please, use a real email")
     private String email;
 
-    private String roleName;
     private double money;
     private String creditCard;
 
     private String partnerCode;
     private User referrerUser;
-    
+
+    private List<Role> roles;
+    private boolean isEnabled;
+
     {
         id = ++userCounter;
     }
@@ -104,16 +108,6 @@ public class DefaultUser implements User {
     @Override
     public String getEmail() {
         return this.email;
-    }
-
-    @Override
-    public String getRoleName() {
-        return this.roleName;
-    }
-
-    @Override
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
     }
 
     @Override
@@ -189,34 +183,23 @@ public class DefaultUser implements User {
 
     }
 
-    void clearState(){
-        userCounter = 0;
+    @Override
+    public void setRoles(List<Role> convertRoleDtosToRoles) {
+        this.roles = convertRoleDtosToRoles;
     }
 
-    public static void setCounter(int updatedCount){
-        userCounter = updatedCount;
+    @Override
+    public List<Role> getRoles() {
+        return this.roles;
     }
-    
-	@Override
-	public int hashCode() {
-		return Objects.hash(creditCard, email, firstName, id, lastName, money, partnerCode, password, referrerUser,
-				roleName);
-	}
-    
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DefaultUser other = (DefaultUser) obj;
-		return Objects.equals(creditCard, other.creditCard) && Objects.equals(email, other.email)
-				&& Objects.equals(firstName, other.firstName) && id == other.id
-				&& Objects.equals(lastName, other.lastName)
-				&& Double.doubleToLongBits(money) == Double.doubleToLongBits(other.money)
-				&& Objects.equals(partnerCode, other.partnerCode) && Objects.equals(password, other.password)
-				&& Objects.equals(referrerUser, other.referrerUser) && Objects.equals(roleName, other.roleName);
-	}
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    @Override
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
 }
