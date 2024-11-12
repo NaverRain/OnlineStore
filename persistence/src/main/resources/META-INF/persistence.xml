@@ -9,6 +9,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<class>com.naverrain.persistence.dto.CategoryDto</class>
+		<class>com.naverrain.persistence.dto.PrivilegeDto</class>
 		<class>com.naverrain.persistence.dto.ProductDto</class>
 		<class>com.naverrain.persistence.dto.PurchaseDto</class>
 		<class>com.naverrain.persistence.dto.PurchaseStatusDto</class>
@@ -26,7 +27,7 @@
 					  value="0000" />
 			<property
 					name="javax.persistence.schema-generation.database.action"
-					value="update" />
+					value="create" />
 			<property name="hibernate.dialect"
 					  value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.show_sql" value="true" />

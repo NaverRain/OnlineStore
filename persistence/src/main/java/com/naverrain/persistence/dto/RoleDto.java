@@ -1,10 +1,7 @@
 package com.naverrain.persistence.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "role")
 public class RoleDto {
@@ -16,10 +13,28 @@ public class RoleDto {
     @Column(name = "role_name")
     private String roleName;
 
+    @ManyToMany(mappedBy = "roles")
+    private List<UserDto> users;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles_privileges",
+            joinColumns = @JoinColumn(name = "role_id",
+            referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "privilege_id",
+            referencedColumnName = "id"))
+    private List<PrivilegeDto> privileges;
+
     public static final String ADMIN_ROLE_NAME = "ADMIN_ROLE";
     public static final String CUSTOMER_ROLE_NAME = "CUSTOMER_ROLE";
     public static final String MANAGER_ROLE_NAME = "MANAGER_ROLE";
-    
+
+    public RoleDto(){
+    }
+
+    public RoleDto(String name){
+        this.roleName = name;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -35,5 +50,20 @@ public class RoleDto {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-    
+
+    public List<UserDto> getUsers(){
+        return users;
+    }
+
+    public void setUsers(List<UserDto> users){
+        this.users = users;
+    }
+
+    public List<PrivilegeDto> getPrivileges(){
+        return privileges;
+    }
+
+    public void setPrivileges(List<PrivilegeDto> privileges){
+        this.privileges = privileges;
+    }
 }

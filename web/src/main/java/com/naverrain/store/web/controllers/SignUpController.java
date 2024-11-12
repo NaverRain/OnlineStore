@@ -1,29 +1,26 @@
 package com.naverrain.store.web.controllers;
 
-import static com.naverrain.store.web.filters.PartnerCodeFilter.*;
 
 import com.naverrain.core.services.Validator;
 import com.naverrain.core.services.impl.DefaultValidator;
 import com.naverrain.store.web.filters.PartnerCodeFilter;
-import com.naverrain.store.web.utils.PBKDF2WithHmacSHA1EncryptionService;
 
 
 import com.naverrain.core.facades.UserFacade;
 import com.naverrain.persistence.entities.User;
 import com.naverrain.persistence.entities.impl.DefaultUser;
-import com.naverrain.core.services.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -45,7 +42,7 @@ public class SignUpController {
 	private MessageSource messageSource;
 
 	@Autowired
-	private PBKDF2WithHmacSHA1EncryptionService encryptionService;
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping
 	public String doGet(Model model){
@@ -88,7 +85,7 @@ public class SignUpController {
 			return "signup";
 		}
 
-		user.setPassword(encryptionService.generatePasswordWithSaltAndHash(notEncryptedPassword));
+		user.setPassword(passwordEncoder.encode(notEncryptedPassword));
 
 		List<String> errorMessages = validator.validate(notEncryptedPassword);
 
@@ -114,6 +111,7 @@ public class SignUpController {
 			LOGGER.info("Partner code {} used for register user", partnerCode);
 		}
 
+		user.setIsEnabled(true);
 		userFacade.registerUser(user, partnerCode);
 		LOGGER.info("New user with email {} registered", user.getEmail());
 		return "redirect:/signin";

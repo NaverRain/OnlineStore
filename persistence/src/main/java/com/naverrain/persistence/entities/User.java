@@ -1,5 +1,7 @@
 package com.naverrain.persistence.entities;
 
+import java.util.List;
+
 public interface User {
 
     String getFirstName();
@@ -18,8 +20,8 @@ public interface User {
     void setPassword(String newPassword);
     void setEmail(String newEmail);
 
-    String getRoleName();
-    void setRoleName(String roleName);
+    List<Role> getRoles();
+    void setRoles(List<Role> convertRoleDtosToRoles);
 
     double getMoney();
     void setMoney(double money);
@@ -32,4 +34,7 @@ public interface User {
     
     void setReferrerUser(User convertUserDtoToUser);
     User getReferrerUser();
+
+    boolean isEnabled();
+    void setIsEnabled(boolean isEnabled);
 }
